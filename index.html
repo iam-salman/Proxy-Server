@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CORS Proxy Example</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f4f4f4;
+            }
+
+            .container {
+                text-align: center;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+            }
+
+            .input-url {
+                padding: 10px;
+                width: 300px;
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            .button {
+                padding: 10px 20px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                border-radius: 5px;
+            }
+
+            .error-message {
+                color: red;
+                margin-top: 10px;
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Fast CORS Proxy</h1>
+            <p>Enter a URL to use the CORS Proxy:</p>
+            <input
+                type="text"
+                id="domain-input"
+                class="input-url"
+                placeholder="https://api.domain.com/"
+            />
+            <button class="button" onclick="openUrl()">Open URL</button>
+            <p class="error-message" id="error-message">
+                Please enter a valid URL!
+            </p>
+        </div>
+
+        <script>
+            function openUrl() {
+                const input = document.getElementById("domain-input").value;
+                const errorMessage = document.getElementById("error-message");
+
+                try {
+                    const url = new URL(input); // Validate URL
+
+                    // Use the proxy server you created in Express
+                    const proxyUrl = `http://localhost:3000/proxy/${url.href}`;
+
+                    window.open(proxyUrl, "_blank");
+
+                    errorMessage.style.display = "none";
+                } catch (e) {
+                    errorMessage.style.display = "block"; // Show error if the input is not a valid URL
+                }
+            }
+        </script>
+    </body>
+</html>
