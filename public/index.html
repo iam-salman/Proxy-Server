@@ -70,9 +70,9 @@
                 try {
                     const url = new URL(input); // Validate URL
 
-                    // Use the proxy server you created in Express
-                    const proxyUrl = `http://localhost:3000/proxy/${url.href}`;
-
+                    const proxyUrl = `/api/proxy?url=${encodeURIComponent(
+                        url.href
+                    )}`;
                     window.open(proxyUrl, "_blank");
 
                     errorMessage.style.display = "none";
